@@ -26,11 +26,6 @@ from surprise.model_selection import train_test_split
 from functions import* 
 import warnings
 
-
-
-
-
-
 warnings.filterwarnings("ignore")
 
 chart_studio.tools.set_credentials_file(username='Mohaamedl', api_key='MvUpzt7O9SQLxrTEuefC')
@@ -94,7 +89,10 @@ def read_reviews_csv(filename,cols_not_use=[]):
     df2 = pd.read_csv(filename) # descomentar para saber quao otimizado ficou
     print(f' De {df2.memory_usage().sum()/1000} Kbytes para {df.memory_usage().sum()/1000} Kbytes, uma redução de {(df2.memory_usage().sum()/1000)/(df.memory_usage().sum()/1000)*100:.2f} % ')
     return df
+
+
 # categorias
+
 def classifier(data,lista):
     data = data.replace('[','').replace(']','').replace('\'','').replace(',','').split()
     if not bool(set(data).intersection(lista)):
@@ -144,11 +142,9 @@ def barPlot_diet(df,year,countries=['Portugal']):
                     "frutos_de_casca_rija":'#634135',
                     "óleos":'#778033',
                     "açúcar":'#533380'
-                    
     }
                 )
    
-
     fig.update_traces(textposition="inside")
     fig.update_traces(visible=True, )
     fig.write_html('../output/barPlot_diet.html') # guardar em html para manter a interatividade, a conversão depois para png ou jpeg é simples.
@@ -191,11 +187,17 @@ def test_model(data,modelo,teste_size=0.2):
 def get_name(id):
     return df_recipes.loc[df_recipes['id_receita'] == id]['nome'].tolist()[0]
 
+
+
 def get_aval(id):
     return df_recipes_2.loc[df_recipes_2['id_receita'] == id]['Avaliação'].tolist()[0]
 
+
+
 def get_idx(id):
     return data[data.id_receita == id].index.tolist()[0]
+
+
 
 
 
@@ -223,3 +225,4 @@ def recommend_svd(data,model,id_receita,n):
     data_2 = data_2.append(df_recipes[df_recipes.id_receita==id_receita]).loc[:,['nome','id_user','id_receita','Avaliação']]
     print(f'As {n} recomendações para a receita {receita} são:\n{receitas.nome.to_list()}')
     return data_2
+
